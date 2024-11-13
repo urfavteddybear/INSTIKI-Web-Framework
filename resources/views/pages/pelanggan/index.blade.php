@@ -25,7 +25,13 @@
                         Tambah Pelanggan
                     </a>
                 </div>
-
+                <form action="{{ route('pelanggan.index') }}" method="GET">
+                    <div class="input-group mb-3">
+                        <input type="text" name="search" class="form-control" placeholder="Cari berdasarkan kode, nama, alamat, atau jenis kelamin" aria-label="Cari berdasarkan kode, nama, alamat, atau jenis kelamin" aria-describedby="button-addon2"
+                            value="{{ request()->query('search') }}">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Cari</button>
+                    </div>
+                </form>
                 <hr>
                     <table class="table table-bordered">
                         <thead>

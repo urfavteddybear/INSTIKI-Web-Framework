@@ -7,13 +7,18 @@ use Illuminate\Http\Request;
 
 class BarangController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $barang = Barang::paginate(10);
+        $search = $request->get('search');
+        $barang = Barang::where('kode', 'LIKE', "%{$search}%")
+            ->orWhere('nama', 'LIKE', "%{$search}%")
+            ->orWhere('harga', 'LIKE', "%{$search}%")
+            ->paginate(10);
         // function ini digunakan untuk menampilkan halaman utama barang
         return view('pages.barang.index', [
-            'barang' => $barang
-    ]);
+            'barang' => $barang,
+            'search' => $search
+        ]);
     }
     public function create() {
         // function ini digunakan untuk menampilkan halaman tambah barang
@@ -64,3 +69,4 @@ class BarangController extends Controller
         return view('pages.barang.show', compact('barang'));
     }
 }
+

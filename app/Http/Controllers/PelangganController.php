@@ -8,14 +8,22 @@ use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pelanggan = Pelanggan_2301010033s::paginate(10);
+        $search = $request->get('search');
+        $pelanggan = Pelanggan_2301010033s::where('kode', 'LIKE', "%{$search}%")
+            ->orWhere('nama_pelanggan', 'LIKE', "%{$search}%")
+            ->orWhere('alamat', 'LIKE', "%{$search}%")
+            ->orWhere('jenis_kelamin', 'LIKE', "%{$search}%")
+            ->orWhere('tanggal_lahir', 'LIKE', "%{$search}%")
+            ->paginate(10);
         // function ini digunakan untuk menampilkan halaman utama barang
         return view('pages.pelanggan.index', [
-            'pelanggan' => $pelanggan
-    ]);
+            'pelanggan' => $pelanggan,
+            'search' => $search
+        ]);
     }
+
     public function create() {
         // function ini digunakan untuk menampilkan halaman tambah barang
 
@@ -69,3 +77,4 @@ class PelangganController extends Controller
         return view('pages.pelanggan.show', compact('pelanggan'));
     }
 }
+

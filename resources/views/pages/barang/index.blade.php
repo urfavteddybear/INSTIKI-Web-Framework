@@ -26,6 +26,18 @@
                     </a>
                 </div>
 
+                {{-- Membuat form pencarian dengan metode GET --}}
+                <form action="{{ route('barang.index') }}" method="GET">
+                    <div class="input-group mb-3">
+                        {{-- Membuat input text untuk menerima inputan user --}}
+                        <input type="text" name="search" class="form-control" placeholder="Cari berdasarkan kode atau nama" aria-label="Cari berdasarkan kode atau nama" aria-describedby="button-addon2"
+                            {{-- Membuat value dari inputan search agar dapat diisi dengan nilai yang diperoleh dari request --}}
+                            value="{{ request()->query('search') }}">
+                        {{-- Membuat tombol submit untuk mengirimkan request --}}
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Cari</button>
+                    </div>
+                </form>
+
                 <hr>
                     <table class="table table-bordered">
                         <thead>
