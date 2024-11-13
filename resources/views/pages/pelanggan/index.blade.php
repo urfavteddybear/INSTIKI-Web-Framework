@@ -25,62 +25,68 @@
                         Tambah Pelanggan
                     </a>
                 </div>
-                <form action="{{ route('pelanggan.index') }}" method="GET">
+
+                {{-- Membuat form pencarian dengan metode GET --}}
+                <form action="{{ request()->url() }}" method="GET">
+                    {{-- Membuat input text untuk menerima inputan user --}}
                     <div class="input-group mb-3">
                         <input type="text" name="search" class="form-control" placeholder="Cari berdasarkan kode, nama, alamat, atau jenis kelamin" aria-label="Cari berdasarkan kode, nama, alamat, atau jenis kelamin" aria-describedby="button-addon2"
+                            {{-- Membuat value dari inputan search agar dapat diisi dengan nilai yang diperoleh dari request --}}
                             value="{{ request()->query('search') }}">
+                        {{-- Membuat tombol submit untuk mengirimkan request --}}
                         <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Cari</button>
                     </div>
                 </form>
-                <hr>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Kode</th>
-                                <th>Nama</th>
-                                <th>Alamat</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Tanggal Lahir</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($pelanggan as $i => $d)
-                                <tr>
-                                    <td>{{ $i + 1 }}</td>
-                                    <td>{{ $d->kode }}</td>
-                                    <td>{{ $d->nama_pelanggan }}</td>
-                                    <td>{{ $d->alamat }}</td>
-                                    <td>{{ $d->jenis_kelamin }}</td>
-                                    <td>{{ $d->tanggal_lahir }}</td>
-                                    <td>{{ $d->is_aktif == '1' ? 'Aktif' : 'Nonaktif' }}</td>
-                                    <td>
-                                        <a href=" {{ route('pelanggan.show', $d->id) }}" class="btn btn-sm btn-info">
-                                            Details
-                                        </a>
-                                        <a href=" {{ route('pelanggan.edit', $d->id) }}" class="btn btn-sm btn-warning">
-                                            Edit
-                                        </a>
-                                        <button type="button" class="btn btn-sm btn-danger"
-                                        onclick="hapusData(`btndelete{{$d->id}}`)">
-                                            Delete
-                                        </button>
-                                        <form action="{{route('pelanggan.destroy', $d->id)}}" method="POST" style="display: none;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="hidden" type="submit" style="display: none;" id="btndelete{{ $d->id }}"></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
 
-                    <div class="d-flex justify-content-center mt-3">
-                        {{ $pelanggan->links('pagination::bootstrap-4') }}
-                    </div>
+                <hr>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kode</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pelanggan as $i => $d)
+                            <tr>
+                                <td>{{ $i + 1 }}</td>
+                                <td>{{ $d->kode }}</td>
+                                <td>{{ $d->nama_pelanggan }}</td>
+                                <td>{{ $d->alamat }}</td>
+                                <td>{{ $d->jenis_kelamin }}</td>
+                                <td>{{ $d->tanggal_lahir }}</td>
+                                <td>{{ $d->is_aktif == '1' ? 'Aktif' : 'Nonaktif' }}</td>
+                                <td>
+                                    <a href=" {{ route('pelanggan.show', $d->id) }}" class="btn btn-sm btn-info">
+                                        Details
+                                    </a>
+                                    <a href=" {{ route('pelanggan.edit', $d->id) }}" class="btn btn-sm btn-warning">
+                                        Edit
+                                    </a>
+                                    <button type="button" class="btn btn-sm btn-danger"
+                                    onclick="hapusData(`btndelete{{$d->id}}`)">
+                                        Delete
+                                    </button>
+                                    <form action="{{route('pelanggan.destroy', $d->id)}}" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="hidden" type="submit" style="display: none;" id="btndelete{{ $d->id }}"></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <div class="d-flex justify-content-center mt-3">
+                    {{ $pelanggan->appends(['search' => request()->query('search')])->links('pagination::bootstrap-4') }}
+                </div>
             </div>
         </div>
     </div>

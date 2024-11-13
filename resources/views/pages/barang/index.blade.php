@@ -27,9 +27,9 @@
                 </div>
 
                 {{-- Membuat form pencarian dengan metode GET --}}
-                <form action="{{ route('barang.index') }}" method="GET">
+                <form action="{{ request()->url() }}" method="GET">
+                    {{-- Membuat input text untuk menerima inputan user --}}
                     <div class="input-group mb-3">
-                        {{-- Membuat input text untuk menerima inputan user --}}
                         <input type="text" name="search" class="form-control" placeholder="Cari berdasarkan kode atau nama" aria-label="Cari berdasarkan kode atau nama" aria-describedby="button-addon2"
                             {{-- Membuat value dari inputan search agar dapat diisi dengan nilai yang diperoleh dari request --}}
                             value="{{ request()->query('search') }}">
@@ -83,7 +83,8 @@
                     </table>
 
                     <div class="d-flex justify-content-center mt-3">
-                        {{ $barang->links('pagination::bootstrap-4') }}
+                        {{-- Membuat pagination agar tetap ada filter atau search --}}
+                        {{ $barang->appends(['search' => request()->query('search')])->links('pagination::bootstrap-4') }}
                     </div>
             </div>
         </div>
