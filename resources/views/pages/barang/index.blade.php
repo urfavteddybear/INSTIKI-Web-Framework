@@ -1,3 +1,4 @@
+/*************  ✨ Codeium Command 🌟  *************/
 @extends('layouts.master')
 
 @section('content')
@@ -25,9 +26,10 @@
                         Tambah Barang
                     </a>
                 </div>
-
+                @csrf
                 {{-- Membuat form pencarian dengan metode GET --}}
                 <form action="{{ request()->url() }}" method="GET">
+                    @csrf
                     {{-- Membuat input text untuk menerima inputan user --}}
                     <div class="input-group mb-3">
                         <input type="text" name="search" class="form-control" placeholder="Cari berdasarkan kode atau nama" aria-label="Cari berdasarkan kode atau nama" aria-describedby="button-addon2"
@@ -111,3 +113,5 @@
     </script>
 @endpush
 
+
+/******  97f3846e-0f59-4770-88c3-fe326e4db042  *******/

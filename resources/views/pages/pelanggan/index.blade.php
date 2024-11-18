@@ -26,8 +26,8 @@
                     </a>
                 </div>
 
-                {{-- Membuat form pencarian dengan metode GET --}}
                 <form action="{{ request()->url() }}" method="GET">
+                    @csrf
                     {{-- Membuat input text untuk menerima inputan user --}}
                     <div class="input-group mb-3">
                         <input type="text" name="search" class="form-control" placeholder="Cari berdasarkan kode, nama, alamat, atau jenis kelamin" aria-label="Cari berdasarkan kode, nama, alamat, atau jenis kelamin" aria-describedby="button-addon2"
